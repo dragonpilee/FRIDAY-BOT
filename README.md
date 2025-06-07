@@ -17,6 +17,12 @@ A futuristic, cyberpunk-themed AI assistant inspired by FRIDAY from Iron Man/Ave
 
 ---
 
+## 📸 Application Preview
+
+![FRIDAY Chat Interface](screenshot.png)
+
+---
+
 ## ✨ Features
 
 - **Modern Chat UI**: Clean, responsive design with purple and cyan cyberpunk accents.
@@ -75,6 +81,7 @@ friday-ai-assistant/
 │   └── style.css
 ├── templates/          # HTML templates
 │   └── index.html
+├── screenshot.png      # Application screenshot
 └── README.md           # Project documentation
 ```
 
@@ -124,5 +131,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
+For more info, updates, and documentation, visit the  
+👉 [GitHub Repository](https://github.com/dragonpilee/FRIDAY-BOT)
 
 Feel free to fork, star ⭐, and contribute!
