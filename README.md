@@ -16,6 +16,10 @@ FRIDAY is your sophisticated AI assistant, inspired by the iconic AI from Iron M
 - 💅 **Cyberpunk Aesthetic**: Purple and cyan accents for that futuristic feel
 - 📝 **Natural Flow**: Conversations that feel real, not robotic
 
+## 📸 Application Preview
+
+![FRIDAY Chat Interface](Screenshot.png)
+
 ## 🚀 Quick Start
 
 1. **Clone the Repository**
