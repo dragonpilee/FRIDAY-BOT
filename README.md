@@ -13,7 +13,17 @@
 
 ## 🤖 FRIDAY - Cyberpunk AI Assistant
 
-A futuristic, cyberpunk-themed AI assistant inspired by FRIDAY from Iron Man/Avengers. FRIDAY features a modern chat interface, persistent conversation history, and is powered by the Gemma-4B language model.
+A futuristic, cyberpunk-themed AI assistant inspired by FRIDAY from Iron Man/Avengers. FRIDAY features a modern chat interface with:
+
+- 🎨 Cyberpunk green-on-black theme
+- 🤔 Thinking dots animation while processing
+- 🎭 Line-by-line typing animation
+- 🔄 Fast response time (0.5s thinking + 10ms per character)
+- 📱 Persistent conversation history
+- 💾 SQLite database for message storage
+- 🤖 Gemma-4B language model integration
+
+FRIDAY is powered by the Gemma-4B language model.
 
 ---
 
@@ -47,23 +57,31 @@ A futuristic, cyberpunk-themed AI assistant inspired by FRIDAY from Iron Man/Ave
 
 ## 💻 Local Development
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/friday-ai-assistant.git
-   cd friday-ai-assistant
-   ```
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Configure environment**
-   - Set `LM_API_URL` (default: `http://localhost:1234/v1/chat/completions`)
-   - Set `MODEL_NAME` (default: `gemma:4b`)
-4. **Run LM Studio**
-   - Start LM Studio with Gemma-4B model on port 1234
-5. **Start the development server**
-   ```bash
-   python app.py
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/dragonpilee/FRIDAY-BOT.git
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the application:
+```bash
+python app.py
+```
+
+4. Open your browser and navigate to `http://localhost:5000`
+
+### System Requirements
+
+- Python 3.8+
+- Flask
+- LM Studio API
+- SQLite
    ```
 6. **Access FRIDAY**
    - Open [http://localhost:5000](http://localhost:5000) in your browser

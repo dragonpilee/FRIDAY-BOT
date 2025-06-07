@@ -7,15 +7,19 @@
         :root {
             --background-color: #000000;
             --text-color: #00ff00;
-            --input-bg: #1a1a1a;
-            --input-border: #333333;
-            --user-bg: #222222;
-            --bot-bg: #4f46e5;
-            --bot-text-color: #ffffff;
+            --input-bg: #000000;
+            --input-border: #00ff00;
+            --user-bg: #000000;
+            --bot-bg: #000000;
+            --bot-text-color: #00ff00;
             --border-radius: 8px;
             --transition: all 0.2s ease;
-            --glow-color: #66d9ef;
-            --accent-color: #4f46e5;
+            --glow-color: #00ff00;
+            --accent-color: #00ff00;
+            --send-button-bg: #00ff00;
+            --send-button-hover: #00cc00;
+            --clear-button-bg: #ff0000;
+            --clear-button-hover: #cc0000;
         }
 
         * {
@@ -85,20 +89,54 @@
             font-style: italic;
             border-left: 4px solid var(--accent-color);
             box-shadow: 0 0 10px rgba(0,255,0,0.2);
+            border: 1px solid var(--accent-color);
         }
 
         .markdown code {
-            background: #2d2d2d;
+            background: #000000;
             padding: 2px 4px;
             border-radius: 4px;
+            border: 1px solid var(--accent-color);
             font-family: 'Consolas', monospace;
         }
 
         .markdown pre {
-            background: #2d2d2d;
+            background: #000000;
             padding: 12px;
             border-radius: 6px;
+            border: 1px solid var(--accent-color);
             overflow-x: auto;
+        }
+
+        .thinking-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .thinking-indicator.active {
+            opacity: 1;
+        }
+
+        .thinking-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--bot-text-color);
+            border-radius: 50%;
+            animation: thinking 1.4s infinite ease-in-out;
+        }
+
+        .thinking-dot:nth-child(1) { animation-delay: 0s; }
+        .thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+        .thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes thinking {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
             font-family: 'Consolas', monospace;
         }
 
@@ -137,32 +175,33 @@
             padding: 10px 20px;
             border: none;
             border-radius: var(--border-radius);
-            background: var(--accent-color);
+            background: var(--send-button-bg);
             color: var(--background-color);
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 0 5px rgba(255,0,0,0.3);
+            box-shadow: 0 0 5px rgba(0,255,0,0.3);
         }
 
         button:hover {
-            background: #ff4444;
+            background: var(--send-button-hover);
             transform: translateY(-1px);
         }
 
         button:active {
-            background: #3730a3;
+            background: #00cc00;
         }
 
         button#clearBtn {
-            background: #ef4444;
+            background: var(--clear-button-bg);
+            color: #ffffff;
         }
 
         button#clearBtn:hover {
-            background: #dc2626;
+            background: var(--clear-button-hover);
         }
 
         button#clearBtn:active {
-            background: #b91c1c;
+            background: #990000;
         }
     </style>
 </head>
@@ -170,6 +209,7 @@
     <div id="chatbox">
         <h2>🤖 FRIDAY - AI Assistant</h2>
         <div id="messages">
+
             {% for msg in history %}
                 <div class="msg {{ msg.role }}">
                     <strong>
@@ -200,6 +240,123 @@
     </footer>
 
     <script>
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Get chat container
+            const chat = document.getElementById('messages');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg user';
+            userMsg.innerHTML = `
+                <strong>You:</strong>
+                <div class="markdown">${message}</div>
+            `;
+            chat.appendChild(userMsg);
+            
+            // Clear input
+            input.value = '';
+            
+            try {
+                // Show thinking indicator
+                const botMsg = document.createElement('div');
+                botMsg.className = 'msg bot';
+                botMsg.innerHTML = `
+                    <strong>FRIDAY:</strong>
+                    <div class="thinking-indicator">
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                    </div>
+                `;
+                chat.appendChild(botMsg);
+                
+                // Simulate thinking time
+                await new Promise(resolve => setTimeout(resolve, 500)); // 0.5 seconds thinking time
+
+                // Get response
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get response');
+                }
+
+                const data = await response.json();
+                const reply = data.reply;
+                const cleanReply = reply.replace(/<p>/g, '').replace(/<\/p>/g, '').trim();
+
+                // Remove thinking indicator and add markdown container
+                const thinkingIndicator = botMsg.querySelector('.thinking-indicator');
+                thinkingIndicator.remove();
+                botMsg.innerHTML += '<div class="markdown"></div>';
+
+                // Split reply into lines
+                const lines = cleanReply.split('\n');
+                
+                // Function to type a line
+                const typeLine = (line, index) => new Promise((resolve) => {
+                    const markdownDiv = botMsg.querySelector('.markdown');
+                    let typed = '';
+                    
+                    const typeChar = () => {
+                        if (typed.length < line.length) {
+                            typed += line.charAt(typed.length);
+                            markdownDiv.textContent = typed;
+                            setTimeout(typeChar, 10); // Faster typing speed
+                        } else {
+                            resolve();
+                        }
+                    };
+                    typeChar();
+                });
+
+                // Type each line sequentially
+                const typeLines = async () => {
+                    for (let i = 0; i < lines.length; i++) {
+                        await typeLine(lines[i], i);
+                        if (i < lines.length - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 200)); // Shorter pause between lines
+                        }
+                    }
+                };
+
+                await typeLines();
+                
+                // Scroll to bottom
+                chat.scrollTop = chat.scrollHeight;
+
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // Add error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'msg bot';
+                errorMsg.innerHTML = `
+                    <strong>FRIDAY:</strong>
+                    <div class="thinking-indicator">
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                        <div class="thinking-dot"></div>
+                    </div>
+                    <div class="markdown">⚠️ Error processing your request</div>
+                `;
+                chat.appendChild(errorMsg);
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+
         function handleKeyPress(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
@@ -207,86 +364,14 @@
             }
         }
 
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-
-            const chat = document.getElementById('messages');
-            chat.innerHTML += `
-                <div class="msg user">
-                    <strong>You:</strong>
-                    <div class="markdown">${message}</div>
-                </div>
-            `;
-            
-            input.value = '';
-            chat.scrollTop = chat.scrollHeight;
-
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const reply = data.reply;
-                // Clean reply by removing HTML tags
-                const cleanReply = reply.replace(/<p>/g, '').replace(/<\/p>/g, '').trim();
-                chat.innerHTML += `
-                    <div class="msg bot">
-                        <strong>FRIDAY:</strong>
-                        <div class="markdown">${cleanReply}</div>
-                    </div>
-                `;
-                chat.scrollTop = chat.scrollHeight;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                chat.innerHTML += `
-                    <div class="msg bot">
-                        <strong>FRIDAY:</strong>
-                        <div class="markdown">⚠️ Error processing your request</div>
-                    </div>
-                `;
-                chat.scrollTop = chat.scrollHeight;
-            });
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById("userInput");
-            const msg = input.value.trim();
-            if (!msg) return;
-
-            const chat = document.getElementById("messages");
-            chat.innerHTML += `<div class="msg user"><strong>You:</strong><div>${msg}</div></div>`;
-            input.value = "";
-
-            const res = await fetch("/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: msg })
-            });
-
-            const data = await res.json();
-            const reply = data.reply || "⚠️ " + data.error;
-            chat.innerHTML += `<div class="msg bot"><strong>FRIDAY:</strong><div class="markdown">${reply}</div></div>`;
-            chat.scrollTop = chat.scrollHeight;
-        }
-
         async function clearChat() {
-            const res = await fetch("/clear", {
-                method: "POST"
+            const chat = document.getElementById('messages');
+            chat.innerHTML = '';
+            
+            // Clear the database history
+            fetch('/clear', {
+                method: 'POST'
             });
-            if (res.ok) {
-                const chat = document.getElementById("messages");
-                chat.innerHTML = "";
-            }
         }
     </script>
 </body>
