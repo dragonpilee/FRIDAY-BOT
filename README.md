@@ -19,7 +19,7 @@ A futuristic, cyberpunk-themed AI assistant inspired by FRIDAY from Iron Man/Ave
 
 ## 📸 Application Preview
 
-![FRIDAY Chat Interface](screenshot.png)
+![FRIDAY Chat Interface](Screenshot.png)
 
 ---
 
