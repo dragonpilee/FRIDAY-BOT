@@ -17,9 +17,16 @@ def init_db():
     conn.commit()
     conn.close()
 
+import html
+
 def save_message(role, content):
     conn = sqlite3.connect('chat_history.db')
     cursor = conn.cursor()
+    
+    # Clean content based on role
+    if role == 'user':
+        # Remove HTML tags for user messages
+        content = content.replace('<p>', '').replace('</p>', '').strip()
     
     cursor.execute('''
         INSERT INTO chat_history (role, content)
@@ -37,7 +44,9 @@ def get_all_messages():
     messages = cursor.fetchall()
     
     conn.close()
-    return messages
+    
+    # Convert to list of dictionaries for better handling
+    return [{'role': role, 'content': content} for role, content in messages]
 
 def clear_history():
     conn = sqlite3.connect('chat_history.db')

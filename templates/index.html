@@ -172,8 +172,20 @@
         <div id="messages">
             {% for msg in history %}
                 <div class="msg {{ msg.role }}">
-                    <strong>{{ msg.role|capitalize }}:</strong>
-                    <div class="markdown">{{ msg.content|safe }}</div>
+                    <strong>
+                        {% if msg.role == 'assistant' %}
+                            FRIDAY:
+                        {% else %}
+                            You:
+                        {% endif %}
+                    </strong>
+                    <div class="markdown">
+                        {% if msg.role == 'assistant' %}
+                            {{ msg.content|safe }}
+                        {% else %}
+                            {{ msg.content|safe }}
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -223,11 +235,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                const reply = data.reply || "⚠️ " + data.error;
+                const reply = data.reply;
+                // Clean reply by removing HTML tags
+                const cleanReply = reply.replace(/<p>/g, '').replace(/<\/p>/g, '').trim();
                 chat.innerHTML += `
                     <div class="msg bot">
                         <strong>FRIDAY:</strong>
-                        <div class="markdown">${reply}</div>
+                        <div class="markdown">${cleanReply}</div>
                     </div>
                 `;
                 chat.scrollTop = chat.scrollHeight;
