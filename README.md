@@ -124,7 +124,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-For more info, updates, and documentation, visit the  
-👉 [GitHub Repository](https://github.com/yourusername/friday-ai-assistant)
 
 Feel free to fork, star ⭐, and contribute!
