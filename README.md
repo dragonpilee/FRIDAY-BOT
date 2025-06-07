@@ -1,112 +1,130 @@
-# 🤖 FRIDAY - Your Personal AI Assistant
+# FRIDAY - Cyberpunk AI Assistant
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Tech Stack](https://img.shields.io/badge/tech%20stack-Flask%20%7C%20Gemma--4B-blue)](https://flask.palletsprojects.com/)
+![Flask](https://img.shields.io/badge/Framework-Flask-blue)
+![Python](https://img.shields.io/badge/Language-Python%203.10+-blue)
+![Gemma-4B](https://img.shields.io/badge/Model-Gemma--4B-purple)
+![SQLite](https://img.shields.io/badge/Database-SQLite-lightgrey)
+![MIT License](https://img.shields.io/badge/License-MIT-blue)
 
-FRIDAY is your sophisticated AI assistant, inspired by the iconic AI from Iron Man/Avengers. Built with modern web technologies and powered by the cutting-edge Gemma-4B language model, FRIDAY offers a seamless and engaging chat experience with persistent conversation history.
+> **Developed by ALAN CYRIL SUNNY**  
+> If you enjoy this project, please ⭐ [star the repository](https://github.com/yourusername/friday-ai-assistant)!
 
-## 🎯 Key Features
+---
 
-- 🤖 **Modern Chat Interface**: Clean, intuitive design that works on any device
-- 💾 **Persistent History**: Never lose your conversations with SQLite database
-- 🔄 **Real-time AI**: Instant responses powered by Gemma-4B
-- 📝 **Easy Controls**: Quick chat clearing and message management
-- 📱 **Mobile Ready**: Perfect for both desktop and mobile
-- 💅 **Cyberpunk Aesthetic**: Purple and cyan accents for that futuristic feel
-- 📝 **Natural Flow**: Conversations that feel real, not robotic
+## 🤖 FRIDAY - Cyberpunk AI Assistant
 
-## 📸 Application Preview
+A futuristic, cyberpunk-themed AI assistant inspired by FRIDAY from Iron Man/Avengers. FRIDAY features a modern chat interface, persistent conversation history, and is powered by the Gemma-4B language model.
 
-![FRIDAY Chat Interface](Screenshot.png)
+---
 
-## 🚀 Quick Start
+## ✨ Features
 
-1. **Clone the Repository**
-```bash
-git clone https://github.com/yourusername/friday-ai-assistant.git
-cd friday-ai-assistant
-```
+- **Modern Chat UI**: Clean, responsive design with purple and cyan cyberpunk accents.
+- **Persistent History**: All conversations are saved using SQLite.
+- **Real-time AI**: Instant, natural responses via Gemma-4B.
+- **Easy Controls**: Clear chat and manage messages effortlessly.
+- **Mobile Ready**: Fully responsive for desktop and mobile.
+- **Sophisticated Persona**: FRIDAY responds with a natural, engaging personality.
 
-2. **Install Dependencies**
-```bash
-pip install -r requirements.txt
-```
+---
 
-3. **Run LM Studio**
+## 🛠️ Tech Stack
+
+- [Flask](https://flask.palletsprojects.com/) – backend framework
+- [Python 3.10+](https://www.python.org/downloads/) – language
+- [Gemma-4B](https://lmstudio.ai/) – language model (via LM Studio)
+- [SQLite](https://www.sqlite.org/) – database for chat history
+- [HTML5, CSS3, JavaScript] – frontend
+- **Cyberpunk UI**: Custom CSS with purple and cyan neon accents
+
+---
+
+## 💻 Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/friday-ai-assistant.git
+   cd friday-ai-assistant
+   ```
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Configure environment**
+   - Set `LM_API_URL` (default: `http://localhost:1234/v1/chat/completions`)
+   - Set `MODEL_NAME` (default: `gemma:4b`)
+4. **Run LM Studio**
    - Start LM Studio with Gemma-4B model on port 1234
+5. **Start the development server**
+   ```bash
+   python app.py
+   ```
+6. **Access FRIDAY**
+   - Open [http://localhost:5000](http://localhost:5000) in your browser
 
-4. **Launch FRIDAY**
-```bash
-python app.py
-```
-
-5. **Access FRIDAY**
-   - Open your browser and navigate to `http://localhost:5000`
-
-## 📱 How to Use
-
-1. **Type Your Message**
-   - Enter your query in the input field
-   - Press Enter or click Send to send
-
-2. **Interact with FRIDAY**
-   - Receive instant responses with FRIDAY's sophisticated personality
-   - Messages are automatically saved
-
-3. **Manage Your Chat**
-   - Use the Clear Chat button to reset the conversation
-   - All messages are securely stored in the database
-
-## Configuration
-
-The application uses the following environment variables:
-
-- `LM_API_URL`: URL of the LM Studio API (default: http://localhost:1234/v1/chat/completions)
-- `MODEL_NAME`: Language model name (default: gemma:4b)
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+---
 
 ## 📁 Project Structure
 
 ```
 friday-ai-assistant/
 ├── app.py              # Main Flask application
-├── templates/          # HTML templates
-├── static/             # CSS, JavaScript, and assets
 ├── database.py         # Database operations
 ├── requirements.txt    # Python dependencies
-└── README.md          # Project documentation
+├── static/             # CSS, JavaScript, and assets
+│   └── style.css
+├── templates/          # HTML templates
+│   └── index.html
+└── README.md           # Project documentation
 ```
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📝 Usage
 
-## Acknowledgments
+1. **Type your message** in the chat input and send.
+2. **Interact with FRIDAY** for instant, natural responses.
+3. **Manage your chat** with clear/reset options. All messages are saved.
 
-- Created by ALAN CYRIL SUNNY
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!  
+1. Fork the repository  
+2. Create a new branch  
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. Make your changes and commit  
+   ```bash
+   git commit -m 'Add some amazing feature'
+   ```
+4. Push to your branch  
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. Open a Pull Request
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🙏 Acknowledgements
+
 - Powered by Gemma-4B language model
 - Inspired by FRIDAY from Iron Man/Avengers universe
+- Created by ALAN CYRIL SUNNY
 
-## Support
+---
 
-For support, please contact ALAN CYRIL SUNNY or open an issue in the GitHub repository.
+For more info, updates, and documentation, visit the  
+👉 [GitHub Repository](https://github.com/yourusername/friday-ai-assistant)
 
-## Contributing
-
-Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
-
-## Technical Details
-
-- **Backend**: Flask web framework
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Language Model**: Gemma-4B
-- **Database**: SQLite
-- **UI Theme**: Cyberpunk-inspired with purple and cyan accents
+Feel free to fork, star ⭐, and contribute!
